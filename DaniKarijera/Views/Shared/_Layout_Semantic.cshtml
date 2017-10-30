@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+	@Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/semantic")
+</head>
+<body>
+    @if (ViewBag.Navigacija == null)
+    {
+    <div class="ui inverted menu">
+        <div class="ui container">
+            <a href="#" class="header item">
+                <img class="logo" style="height:20px;" src="~/Content/Images/Logo_white.png">
+
+            </a>
+            <a href="#" class="item">Glavna</a>
+            <div class="ui simple dropdown item">
+                Poslodavci <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/Poslodavci/Index">Pregled</a>
+                    <a class="item" href="/Poslodavci/Dodaj">Dodavanje</a>
+                </div>
+            </div>
+            <div class="ui simple dropdown item">
+                Administracija <i class="dropdown icon"></i>
+                <div class="menu">
+                    <div class="header">Raspored</div>
+                    <div class="divider"></div>
+                    <a class="item" href="/Raspored/Index">Pregled rasporeda</a>
+                    <a class="item" href="/Raspored/Dodaj">Dodavanje događaja</a>
+                    <div class="divider"></div>
+                    <div class="header">Prostorije</div>
+                    <div class="divider"></div>
+                    <a class="item" href="/Prostorije/Index">Pregled prostorija</a>
+                    <a class="item" href="/Prostorije/Dodaj">Dodavanje prostorija</a>
+                    <div class="divider"></div>
+                    <div class="header">Virtualne vizitke</div>
+                    <div class="divider"></div>
+                    <a class="item" href="/Dizajn/Index">Pregled dizajna</a>
+                    <a class="item" href="/Dizajn/Dodaj">Dodavanje dizajna</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+    }
+    @RenderBody()
+	@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/semantic")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

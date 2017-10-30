@@ -1,0 +1,86 @@
+﻿@using DaniKarijera.Models
+@model Registracija
+@{
+    Layout = "~/Views/Shared/_Layout_Semantic.cshtml";;
+    ViewBag.Title = "FOI Dani karijera [Registracija]";
+}
+
+
+
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+
+            body > .grid {
+                height: 100%;
+            }
+
+
+        .column {
+            max-width: 450px;
+        }
+    </style>
+
+
+   
+
+    <div class="ui middle aligned center aligned grid">
+        
+        <div class="column">    
+            @if (ViewBag.Postoji != null)
+            {
+                <div class="ui warning message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Upozorenje...
+                    </div>
+                    <p>
+                        Račun s ovom adresom e-pošte već postoji!
+                    </p>
+                </div>
+            }
+            <form class="ui large form" method="post">
+                <img src="~/Content/Images/Logo.png" class="image" style="width:300px;"/>
+                
+                <div class="ui stacked segment">
+                    
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="Registracija.Ime" placeholder="Ime">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="Registracija.Prezime" placeholder="Prezime">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="Registracija.Email" placeholder="Adresa e-pošte">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="Registracija.Zaporka" placeholder="Zaporka">
+                        </div>
+                    </div>
+
+                    
+                    <div class="ui fluid large  submit button " style="background:#691C4C; color:#FFF;">Registracija</div>
+                </div>
+
+                <div class="ui error message"></div>
+
+            </form>
+
+            <div class="ui message">
+               Imaš račun? <a href="~/Account/Login" class="ljubicasta">Prijava</a>
+            </div>
+        </div>
+    </div>
+

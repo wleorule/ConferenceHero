@@ -1,0 +1,66 @@
+﻿@using DaniKarijera.Models
+@{
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml"; 
+    ViewBag.Title = "FOI Dani karijera [Glavna]";
+}
+
+
+
+        <div id="calendar">
+
+        </div>
+
+
+
+  
+    @Styles.Render("~/Content/css/fullcalendar")
+ 
+    @Scripts.Render("~/bundles/fullcalendar")
+
+<script>
+    $(document).ready(function () {
+
+        // page is now ready, initialize the calendar...
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'agendaDay'
+            },            
+            editable: false,
+            navLinks: true, // can click day/week names to navigate views
+            eventLimit: true, // allow "more" link when too many events
+            events: [
+                @{ int brojac = 1; }
+                 @foreach(raspored r in ViewData["raspored"] as List<raspored>)
+                 {
+                     <text>{
+                    "title": "</text> @r.naziv_predavanja <text>",
+                    "start": "</text> @r.datum.ToString("yyyy-MM-dd")<text>T</text>@r.od<text>",
+                    "end": "</text> @r.datum.ToString("yyyy-MM-dd")<text>T</text>@(r.@do)<text>",
+                    "backgroundColor": "</text> @r.prostorije.boja <text>"}</text>
+
+                        
+
+                     if(brojac != (ViewData["raspored"] as List<raspored>).Count)
+                     {
+                         <text>,</text>
+                     }
+                     brojac++;
+                 }
+            ],
+            loading: function (bool) {
+                $('#loading').toggle(bool);
+            },
+            defaultView: "agendaWeek",
+            height: 500,
+            minTime: "08:00:00",
+            maxTime: "20:00:00"
+        })
+
+
+
+    });
+</script>
+

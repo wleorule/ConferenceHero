@@ -1,0 +1,128 @@
+﻿@using DaniKarijera.Models
+@model PoslodavciAdd
+@{
+    Layout = "~/Views/Shared/_Layout_Semantic.cshtml"; ;
+    ViewBag.Title = "FOI Dani karijera [Dodaj poslodavca]";
+}
+
+
+
+<style type="text/css">
+    body {
+        background-color: #DADADA;
+    }
+
+    .ui.menu .item img.logo {
+        margin-right: 1.5em;
+    }
+
+    .main.container {
+        margin-top: 7em;
+    }
+
+    .wireframe {
+        margin-top: 2em;
+    }
+
+    .ui.footer.segment {
+        margin: 5em 0em 0em;
+        padding: 5em 0em;
+    }
+
+    * .table {
+        margin-top: 10%;
+    }
+
+    .labeleeeeee{
+    }
+</style>
+
+@if (ViewBag.Error != null)
+            {
+    <div class="ui negative message">
+        <i class="close icon"></i>
+        <div class="header">
+            Nešto je pošlo po krivu!
+        </div>
+        <p>
+            @ViewBag.Error
+        </p>
+    </div>
+}
+
+@if (ViewBag.Success != null)
+            {
+    <div class="ui positive  message">
+        <i class="close icon"></i>
+        <div class="header">
+            Uspješno!
+        </div>
+        <p>
+            @ViewBag.Success
+        </p>
+    </div>
+}
+
+
+    <div class="ui text container">
+        <form action="" class="ui large form" method="POST">
+            <div class="ui middle aligned center aligned grid" style="background:#EEEEEE;">
+                <div class="column">
+
+                    <div class="ui middle aligned center aligned grid" style="background:#EEEEEE;">
+                        <div class="column">
+
+                            <div class="ui left corner labeled input">
+                                <select name="poslodavac.id_poslodavca" placeholder="Poslodavac">
+                                    <option value="0">- Molimo odaberite -</option>
+                                    @foreach (poslodavci p in ViewData["poslodavci"] as List<poslodavci>)
+                                    {
+                                        <option value="@p.id_poslodavca">@p.naziv</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui middle aligned center aligned grid" style="background:#EEEEEE;">
+                <div class="column">
+
+                    <div class="ui left corner labeled input">
+                        <input type="text" name="poslodavac.Ime" placeholder="Ime odg. osobe">
+                        <div class="ui left corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="ui middle aligned center aligned grid" style="background:#EEEEEE;">
+                <div class="column">
+                    <div class="ui left corner labeled input">
+                        <input type="text" name="poslodavac.Prezime" placeholder="Prezime odg. osobe">
+                        <div class="ui left corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui middle aligned center aligned grid" style="background:#EEEEEE;">
+                <div class="column">
+                    <div class="ui left corner labeled input">
+                        <input type="text" name="poslodavac.Email" placeholder="Email odg. osobe">
+                        <div class="ui left corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui middle aligned center aligned grid" style="background:#EEEEEE;">
+                <div class="column">
+                    <input type="submit" class="ui fluid large  submit button " style="background:#691C4C; color:#FFF;" value="Spremi">
+                </div>
+            </div>
+        </form>
+</div>
+

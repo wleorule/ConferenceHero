@@ -1,0 +1,95 @@
+﻿@model DaniKarijera.Models.Korisnik
+
+@{
+    ViewBag.Title = "Profil";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Uspjesno))
+{
+    <div class="alert alert-success">
+        <strong>Uspješno!</strong> @ViewBag.Uspjesno
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-success">
+        <strong>Uspješno!</strong> @ViewBag.Error
+    </div>
+}
+
+<h2>@Model.ime @Model.prezime</h2>
+
+@using (Html.BeginForm("Profil", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id_korisnika)
+
+        <div class="form-group">
+           <label class="control-label col-md-2">Ime:</label>
+            <div class="col-md-10">
+                <input type="text" name="korisnik.ime"class="form-control"  value="@Model.ime"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Prezime:</label>
+            <div class="col-md-10">
+                <input type="text" name="korisnik.prezime"class="form-control"  value="@Model.prezime"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Slika:</label>
+            <div class="col-md-10">
+                <input type="file"class="form-control"  name="korisnik.slika" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Smjer:</label>
+            <div class="col-md-10">
+                <input type="text" name="korisnik.smjer"class="form-control"  value="@Model.smjer"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Godina:</label>
+            <div class="col-md-10">
+                <input type="text" name="korisnik.godina"class="form-control"  value="@Model.godina"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Interesi:</label>
+            <div class="col-md-10">
+                <input type="text" name="korisnik.interesi" class="form-control"  value="@Model.interesi"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Broj telefona:</label>
+            <div class="col-md-10">
+                <input type="text" name="korisnik.broj_telefona"class="form-control"   value="@Model.broj_telefona"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Spremi" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@Styles.Render("~/Content/css");
+
+@Styles.Render("~/Content/css/leo");

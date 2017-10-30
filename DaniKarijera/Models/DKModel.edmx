@@ -1,0 +1,675 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DaniKarijeraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dizajn">
+          <Key>
+            <PropertyRef Name="id_dizajna" />
+          </Key>
+          <Property Name="id_dizajna" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="naziv" Type="nvarchar" MaxLength="32" />
+          <Property Name="slika" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="glasanje">
+          <Key>
+            <PropertyRef Name="id_glasanje" />
+          </Key>
+          <Property Name="id_glasanje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_korisnika" Type="int" />
+          <Property Name="id_poslodavca" Type="int" />
+          <Property Name="ocjena" Type="int" />
+        </EntityType>
+        <EntityType Name="korisnici">
+          <Key>
+            <PropertyRef Name="id_korisnika" />
+          </Key>
+          <Property Name="id_korisnika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ime" Type="nvarchar" MaxLength="32" />
+          <Property Name="prezime" Type="nvarchar" MaxLength="32" />
+          <Property Name="slika" Type="nvarchar" MaxLength="128" />
+          <Property Name="email" Type="nvarchar" MaxLength="64" />
+          <Property Name="zaporka" Type="nvarchar" MaxLength="255" />
+          <Property Name="smjer" Type="nvarchar" MaxLength="64" />
+          <Property Name="godina" Type="nvarchar" MaxLength="32" />
+          <Property Name="interesi" Type="text" />
+          <Property Name="broj_telefona" Type="nvarchar" MaxLength="32" />
+          <Property Name="token" Type="nchar" MaxLength="255" />
+          <Property Name="privilegija" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="poslodavci">
+          <Key>
+            <PropertyRef Name="id_poslodavca" />
+          </Key>
+          <Property Name="id_poslodavca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="naziv" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="link" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="web" Type="nvarchar" MaxLength="255" />
+          <Property Name="opis" Type="nvarchar" MaxLength="500" />
+          <Property Name="slika" Type="nvarchar(max)" />
+          <Property Name="logo" Type="nvarchar(max)" />
+          <Property Name="glasanje" Type="bit" />
+          <Property Name="popis" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="prostorije">
+          <Key>
+            <PropertyRef Name="id_prostorije" />
+          </Key>
+          <Property Name="id_prostorije" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="naziv" Type="nvarchar" MaxLength="32" />
+          <Property Name="lokacija" Type="nvarchar" MaxLength="64" />
+          <Property Name="boja" Type="nvarchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="radnici">
+          <Key>
+            <PropertyRef Name="id_radnika" />
+          </Key>
+          <Property Name="id_radnika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pozicija" Type="nvarchar" MaxLength="32" />
+          <Property Name="link" Type="nvarchar" MaxLength="255" />
+          <Property Name="id_poslodavca" Type="int" Nullable="false" />
+          <Property Name="id_korisnika" Type="int" />
+        </EntityType>
+        <EntityType Name="raspored">
+          <Key>
+            <PropertyRef Name="id_raspored" />
+          </Key>
+          <Property Name="id_raspored" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_poslodavca" Type="int" />
+          <Property Name="naziv_predavanja" Type="nvarchar" MaxLength="64" />
+          <Property Name="slika" Type="nvarchar" MaxLength="128" />
+          <Property Name="id_prostorije" Type="int" Nullable="false" />
+          <Property Name="datum" Type="date" Nullable="false" />
+          <Property Name="od" Type="time" Precision="7" Nullable="false" />
+          <Property Name="do" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="virtualne_vizitke">
+          <Key>
+            <PropertyRef Name="id_vizitke" />
+          </Key>
+          <Property Name="id_vizitke" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_korisnika" Type="int" />
+          <Property Name="id_poslodavnca" Type="int" />
+          <Property Name="id_dizajna" Type="int" />
+        </EntityType>
+        <Association Name="FK__glasanje__id_kor__6FE99F9F">
+          <End Role="korisnici" Type="Self.korisnici" Multiplicity="0..1" />
+          <End Role="glasanje" Type="Self.glasanje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="korisnici">
+              <PropertyRef Name="id_korisnika" />
+            </Principal>
+            <Dependent Role="glasanje">
+              <PropertyRef Name="id_korisnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__glasanje__id_pos__70DDC3D8">
+          <End Role="poslodavci" Type="Self.poslodavci" Multiplicity="0..1" />
+          <End Role="glasanje" Type="Self.glasanje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poslodavci">
+              <PropertyRef Name="id_poslodavca" />
+            </Principal>
+            <Dependent Role="glasanje">
+              <PropertyRef Name="id_poslodavca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__radnici__id_kori__6383C8BA">
+          <End Role="korisnici" Type="Self.korisnici" Multiplicity="0..1" />
+          <End Role="radnici" Type="Self.radnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="korisnici">
+              <PropertyRef Name="id_korisnika" />
+            </Principal>
+            <Dependent Role="radnici">
+              <PropertyRef Name="id_korisnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__radnici__id_posl__3E52440B">
+          <End Role="poslodavci" Type="Self.poslodavci" Multiplicity="1" />
+          <End Role="radnici" Type="Self.radnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poslodavci">
+              <PropertyRef Name="id_poslodavca" />
+            </Principal>
+            <Dependent Role="radnici">
+              <PropertyRef Name="id_poslodavca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__raspored__id_pos__29572725">
+          <End Role="poslodavci" Type="Self.poslodavci" Multiplicity="0..1" />
+          <End Role="raspored" Type="Self.raspored" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poslodavci">
+              <PropertyRef Name="id_poslodavca" />
+            </Principal>
+            <Dependent Role="raspored">
+              <PropertyRef Name="id_poslodavca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__raspored__id_pro__2A4B4B5E">
+          <End Role="prostorije" Type="Self.prostorije" Multiplicity="1" />
+          <End Role="raspored" Type="Self.raspored" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prostorije">
+              <PropertyRef Name="id_prostorije" />
+            </Principal>
+            <Dependent Role="raspored">
+              <PropertyRef Name="id_prostorije" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__virtualne__id_di__32E0915F">
+          <End Role="dizajn" Type="Self.dizajn" Multiplicity="0..1" />
+          <End Role="virtualne_vizitke" Type="Self.virtualne_vizitke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dizajn">
+              <PropertyRef Name="id_dizajna" />
+            </Principal>
+            <Dependent Role="virtualne_vizitke">
+              <PropertyRef Name="id_dizajna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__virtualne__id_ko__30F848ED">
+          <End Role="korisnici" Type="Self.korisnici" Multiplicity="0..1" />
+          <End Role="virtualne_vizitke" Type="Self.virtualne_vizitke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="korisnici">
+              <PropertyRef Name="id_korisnika" />
+            </Principal>
+            <Dependent Role="virtualne_vizitke">
+              <PropertyRef Name="id_korisnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__virtualne__id_po__31EC6D26">
+          <End Role="poslodavci" Type="Self.poslodavci" Multiplicity="0..1" />
+          <End Role="virtualne_vizitke" Type="Self.virtualne_vizitke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poslodavci">
+              <PropertyRef Name="id_poslodavca" />
+            </Principal>
+            <Dependent Role="virtualne_vizitke">
+              <PropertyRef Name="id_poslodavnca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DaniKarijeraModelStoreContainer">
+          <EntitySet Name="dizajn" EntityType="Self.dizajn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="glasanje" EntityType="Self.glasanje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="korisnici" EntityType="Self.korisnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="poslodavci" EntityType="Self.poslodavci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prostorije" EntityType="Self.prostorije" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="radnici" EntityType="Self.radnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="raspored" EntityType="Self.raspored" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="virtualne_vizitke" EntityType="Self.virtualne_vizitke" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__glasanje__id_kor__6FE99F9F" Association="Self.FK__glasanje__id_kor__6FE99F9F">
+            <End Role="korisnici" EntitySet="korisnici" />
+            <End Role="glasanje" EntitySet="glasanje" />
+          </AssociationSet>
+          <AssociationSet Name="FK__glasanje__id_pos__70DDC3D8" Association="Self.FK__glasanje__id_pos__70DDC3D8">
+            <End Role="poslodavci" EntitySet="poslodavci" />
+            <End Role="glasanje" EntitySet="glasanje" />
+          </AssociationSet>
+          <AssociationSet Name="FK__radnici__id_kori__6383C8BA" Association="Self.FK__radnici__id_kori__6383C8BA">
+            <End Role="korisnici" EntitySet="korisnici" />
+            <End Role="radnici" EntitySet="radnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK__radnici__id_posl__3E52440B" Association="Self.FK__radnici__id_posl__3E52440B">
+            <End Role="poslodavci" EntitySet="poslodavci" />
+            <End Role="radnici" EntitySet="radnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK__raspored__id_pos__29572725" Association="Self.FK__raspored__id_pos__29572725">
+            <End Role="poslodavci" EntitySet="poslodavci" />
+            <End Role="raspored" EntitySet="raspored" />
+          </AssociationSet>
+          <AssociationSet Name="FK__raspored__id_pro__2A4B4B5E" Association="Self.FK__raspored__id_pro__2A4B4B5E">
+            <End Role="prostorije" EntitySet="prostorije" />
+            <End Role="raspored" EntitySet="raspored" />
+          </AssociationSet>
+          <AssociationSet Name="FK__virtualne__id_di__32E0915F" Association="Self.FK__virtualne__id_di__32E0915F">
+            <End Role="dizajn" EntitySet="dizajn" />
+            <End Role="virtualne_vizitke" EntitySet="virtualne_vizitke" />
+          </AssociationSet>
+          <AssociationSet Name="FK__virtualne__id_ko__30F848ED" Association="Self.FK__virtualne__id_ko__30F848ED">
+            <End Role="korisnici" EntitySet="korisnici" />
+            <End Role="virtualne_vizitke" EntitySet="virtualne_vizitke" />
+          </AssociationSet>
+          <AssociationSet Name="FK__virtualne__id_po__31EC6D26" Association="Self.FK__virtualne__id_po__31EC6D26">
+            <End Role="poslodavci" EntitySet="poslodavci" />
+            <End Role="virtualne_vizitke" EntitySet="virtualne_vizitke" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DaniKarijeraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dizajn">
+          <Key>
+            <PropertyRef Name="id_dizajna" />
+          </Key>
+          <Property Name="id_dizajna" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="naziv" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="slika" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="virtualne_vizitke" Relationship="Self.FK__virtualne__id_di__32E0915F" FromRole="dizajn" ToRole="virtualne_vizitke" />
+        </EntityType>
+        <EntityType Name="prostorije">
+          <Key>
+            <PropertyRef Name="id_prostorije" />
+          </Key>
+          <Property Name="id_prostorije" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="naziv" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="lokacija" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="boja" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="raspored" Relationship="Self.FK__raspored__id_pro__2A4B4B5E" FromRole="prostorije" ToRole="raspored" />
+        </EntityType>
+        <EntityType Name="raspored">
+          <Key>
+            <PropertyRef Name="id_raspored" />
+          </Key>
+          <Property Name="id_raspored" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_poslodavca" Type="Int32" />
+          <Property Name="naziv_predavanja" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="slika" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="id_prostorije" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="od" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="do" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="prostorije" Relationship="Self.FK__raspored__id_pro__2A4B4B5E" FromRole="raspored" ToRole="prostorije" />
+          <NavigationProperty Name="poslodavci" Relationship="DaniKarijeraModel.FK__raspored__id_pos__29572725" FromRole="raspored" ToRole="poslodavci" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="virtualne_vizitke">
+          <Key>
+            <PropertyRef Name="id_vizitke" />
+          </Key>
+          <Property Name="id_vizitke" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_korisnika" Type="Int32" />
+          <Property Name="id_poslodavnca" Type="Int32" />
+          <Property Name="id_dizajna" Type="Int32" />
+          <NavigationProperty Name="dizajn" Relationship="Self.FK__virtualne__id_di__32E0915F" FromRole="virtualne_vizitke" ToRole="dizajn" />
+          <NavigationProperty Name="korisnici" Relationship="DaniKarijeraModel.FK__virtualne__id_ko__30F848ED" FromRole="virtualne_vizitke" ToRole="korisnici" />
+          <NavigationProperty Name="poslodavci" Relationship="DaniKarijeraModel.FK__virtualne__id_po__31EC6D26" FromRole="virtualne_vizitke" ToRole="poslodavci" />
+        </EntityType>
+        <Association Name="FK__virtualne__id_di__32E0915F">
+          <End Role="dizajn" Type="Self.dizajn" Multiplicity="0..1" />
+          <End Role="virtualne_vizitke" Type="Self.virtualne_vizitke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dizajn">
+              <PropertyRef Name="id_dizajna" />
+            </Principal>
+            <Dependent Role="virtualne_vizitke">
+              <PropertyRef Name="id_dizajna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__raspored__id_pro__2A4B4B5E">
+          <End Role="prostorije" Type="Self.prostorije" Multiplicity="1" />
+          <End Role="raspored" Type="Self.raspored" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prostorije">
+              <PropertyRef Name="id_prostorije" />
+            </Principal>
+            <Dependent Role="raspored">
+              <PropertyRef Name="id_prostorije" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DKEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dizajn" EntityType="Self.dizajn" />
+          <EntitySet Name="prostorije" EntityType="Self.prostorije" />
+          <EntitySet Name="raspored" EntityType="Self.raspored" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="virtualne_vizitke" EntityType="Self.virtualne_vizitke" />
+          <AssociationSet Name="FK__virtualne__id_di__32E0915F" Association="Self.FK__virtualne__id_di__32E0915F">
+            <End Role="dizajn" EntitySet="dizajn" />
+            <End Role="virtualne_vizitke" EntitySet="virtualne_vizitke" />
+          </AssociationSet>
+          <AssociationSet Name="FK__raspored__id_pro__2A4B4B5E" Association="Self.FK__raspored__id_pro__2A4B4B5E">
+            <End Role="prostorije" EntitySet="prostorije" />
+            <End Role="raspored" EntitySet="raspored" />
+          </AssociationSet>
+          <EntitySet Name="korisnici" EntityType="DaniKarijeraModel.korisnici" />
+          <AssociationSet Name="FK__virtualne__id_ko__30F848ED" Association="DaniKarijeraModel.FK__virtualne__id_ko__30F848ED">
+            <End Role="korisnici" EntitySet="korisnici" />
+            <End Role="virtualne_vizitke" EntitySet="virtualne_vizitke" />
+          </AssociationSet>
+          <EntitySet Name="poslodavci" EntityType="DaniKarijeraModel.poslodavci" />
+          <AssociationSet Name="FK__raspored__id_pos__29572725" Association="DaniKarijeraModel.FK__raspored__id_pos__29572725">
+            <End Role="poslodavci" EntitySet="poslodavci" />
+            <End Role="raspored" EntitySet="raspored" />
+          </AssociationSet>
+          <AssociationSet Name="FK__virtualne__id_po__31EC6D26" Association="DaniKarijeraModel.FK__virtualne__id_po__31EC6D26">
+            <End Role="poslodavci" EntitySet="poslodavci" />
+            <End Role="virtualne_vizitke" EntitySet="virtualne_vizitke" />
+          </AssociationSet>
+          <EntitySet Name="radnici" EntityType="DaniKarijeraModel.radnici" />
+          <AssociationSet Name="FK__radnici__id_kori__6383C8BA" Association="DaniKarijeraModel.FK__radnici__id_kori__6383C8BA">
+            <End Role="korisnici" EntitySet="korisnici" />
+            <End Role="radnici" EntitySet="radnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK__radnici__id_posl__3E52440B" Association="DaniKarijeraModel.FK__radnici__id_posl__3E52440B">
+            <End Role="poslodavci" EntitySet="poslodavci" />
+            <End Role="radnici" EntitySet="radnici" />
+          </AssociationSet>
+          <EntitySet Name="glasanje" EntityType="DaniKarijeraModel.glasanje" />
+          <AssociationSet Name="FK__glasanje__id_kor__6FE99F9F" Association="DaniKarijeraModel.FK__glasanje__id_kor__6FE99F9F">
+            <End Role="korisnici" EntitySet="korisnici" />
+            <End Role="glasanje" EntitySet="glasanje" />
+          </AssociationSet>
+          <AssociationSet Name="FK__glasanje__id_pos__70DDC3D8" Association="DaniKarijeraModel.FK__glasanje__id_pos__70DDC3D8">
+            <End Role="poslodavci" EntitySet="poslodavci" />
+            <End Role="glasanje" EntitySet="glasanje" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="korisnici">
+          <Key>
+            <PropertyRef Name="id_korisnika" />
+          </Key>
+          <Property Name="id_korisnika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ime" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="prezime" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="slika" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="zaporka" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="smjer" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="godina" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="interesi" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="broj_telefona" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="token" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="privilegija" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="virtualne_vizitke" Relationship="DaniKarijeraModel.FK__virtualne__id_ko__30F848ED" FromRole="korisnici" ToRole="virtualne_vizitke" />
+          <NavigationProperty Name="radnici" Relationship="DaniKarijeraModel.FK__radnici__id_kori__6383C8BA" FromRole="korisnici" ToRole="radnici" />
+          <NavigationProperty Name="glasanje" Relationship="DaniKarijeraModel.FK__glasanje__id_kor__6FE99F9F" FromRole="korisnici" ToRole="glasanje" />
+        </EntityType>
+        <Association Name="FK__virtualne__id_ko__30F848ED">
+          <End Type="DaniKarijeraModel.korisnici" Role="korisnici" Multiplicity="0..1" />
+          <End Type="DaniKarijeraModel.virtualne_vizitke" Role="virtualne_vizitke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="korisnici">
+              <PropertyRef Name="id_korisnika" />
+            </Principal>
+            <Dependent Role="virtualne_vizitke">
+              <PropertyRef Name="id_korisnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="poslodavci">
+          <Key>
+            <PropertyRef Name="id_poslodavca" />
+          </Key>
+          <Property Name="id_poslodavca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="naziv" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="web" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="opis" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="slika" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="raspored" Relationship="DaniKarijeraModel.FK__raspored__id_pos__29572725" FromRole="poslodavci" ToRole="raspored" />
+          <NavigationProperty Name="virtualne_vizitke" Relationship="DaniKarijeraModel.FK__virtualne__id_po__31EC6D26" FromRole="poslodavci" ToRole="virtualne_vizitke" />
+          <NavigationProperty Name="radnici" Relationship="DaniKarijeraModel.FK__radnici__id_posl__3E52440B" FromRole="poslodavci" ToRole="radnici" />
+          <NavigationProperty Name="glasanje" Relationship="DaniKarijeraModel.FK__glasanje__id_pos__70DDC3D8" FromRole="poslodavci" ToRole="glasanje" />
+          <Property Name="glasanje1" Type="Boolean" />
+          <Property Name="popis" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__raspored__id_pos__29572725">
+          <End Type="DaniKarijeraModel.poslodavci" Role="poslodavci" Multiplicity="0..1" />
+          <End Type="DaniKarijeraModel.raspored" Role="raspored" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poslodavci">
+              <PropertyRef Name="id_poslodavca" />
+            </Principal>
+            <Dependent Role="raspored">
+              <PropertyRef Name="id_poslodavca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__virtualne__id_po__31EC6D26">
+          <End Type="DaniKarijeraModel.poslodavci" Role="poslodavci" Multiplicity="0..1" />
+          <End Type="DaniKarijeraModel.virtualne_vizitke" Role="virtualne_vizitke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poslodavci">
+              <PropertyRef Name="id_poslodavca" />
+            </Principal>
+            <Dependent Role="virtualne_vizitke">
+              <PropertyRef Name="id_poslodavnca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="radnici">
+          <Key>
+            <PropertyRef Name="id_radnika" />
+          </Key>
+          <Property Name="id_radnika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pozicija" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="id_poslodavca" Type="Int32" Nullable="false" />
+          <Property Name="id_korisnika" Type="Int32" />
+          <NavigationProperty Name="korisnici" Relationship="DaniKarijeraModel.FK__radnici__id_kori__6383C8BA" FromRole="radnici" ToRole="korisnici" />
+          <NavigationProperty Name="poslodavci" Relationship="DaniKarijeraModel.FK__radnici__id_posl__3E52440B" FromRole="radnici" ToRole="poslodavci" />
+        </EntityType>
+        <Association Name="FK__radnici__id_kori__6383C8BA">
+          <End Type="DaniKarijeraModel.korisnici" Role="korisnici" Multiplicity="0..1" />
+          <End Type="DaniKarijeraModel.radnici" Role="radnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="korisnici">
+              <PropertyRef Name="id_korisnika" />
+            </Principal>
+            <Dependent Role="radnici">
+              <PropertyRef Name="id_korisnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__radnici__id_posl__3E52440B">
+          <End Type="DaniKarijeraModel.poslodavci" Role="poslodavci" Multiplicity="1" />
+          <End Type="DaniKarijeraModel.radnici" Role="radnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poslodavci">
+              <PropertyRef Name="id_poslodavca" />
+            </Principal>
+            <Dependent Role="radnici">
+              <PropertyRef Name="id_poslodavca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="glasanje">
+          <Key>
+            <PropertyRef Name="id_glasanje" />
+          </Key>
+          <Property Name="id_glasanje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_korisnika" Type="Int32" />
+          <Property Name="id_poslodavca" Type="Int32" />
+          <Property Name="ocjena" Type="Int32" />
+          <NavigationProperty Name="korisnici" Relationship="DaniKarijeraModel.FK__glasanje__id_kor__6FE99F9F" FromRole="glasanje" ToRole="korisnici" />
+          <NavigationProperty Name="poslodavci" Relationship="DaniKarijeraModel.FK__glasanje__id_pos__70DDC3D8" FromRole="glasanje" ToRole="poslodavci" />
+        </EntityType>
+        <Association Name="FK__glasanje__id_kor__6FE99F9F">
+          <End Type="DaniKarijeraModel.korisnici" Role="korisnici" Multiplicity="0..1" />
+          <End Type="DaniKarijeraModel.glasanje" Role="glasanje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="korisnici">
+              <PropertyRef Name="id_korisnika" />
+            </Principal>
+            <Dependent Role="glasanje">
+              <PropertyRef Name="id_korisnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__glasanje__id_pos__70DDC3D8">
+          <End Type="DaniKarijeraModel.poslodavci" Role="poslodavci" Multiplicity="0..1" />
+          <End Type="DaniKarijeraModel.glasanje" Role="glasanje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poslodavci">
+              <PropertyRef Name="id_poslodavca" />
+            </Principal>
+            <Dependent Role="glasanje">
+              <PropertyRef Name="id_poslodavca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DaniKarijeraModelStoreContainer" CdmEntityContainer="DKEntities">
+          <EntitySetMapping Name="dizajn">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.dizajn">
+              <MappingFragment StoreEntitySet="dizajn">
+                <ScalarProperty Name="id_dizajna" ColumnName="id_dizajna" />
+                <ScalarProperty Name="naziv" ColumnName="naziv" />
+                <ScalarProperty Name="slika" ColumnName="slika" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prostorije">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.prostorije">
+              <MappingFragment StoreEntitySet="prostorije">
+                <ScalarProperty Name="id_prostorije" ColumnName="id_prostorije" />
+                <ScalarProperty Name="naziv" ColumnName="naziv" />
+                <ScalarProperty Name="lokacija" ColumnName="lokacija" />
+                <ScalarProperty Name="boja" ColumnName="boja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="raspored">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.raspored">
+              <MappingFragment StoreEntitySet="raspored">
+                <ScalarProperty Name="id_raspored" ColumnName="id_raspored" />
+                <ScalarProperty Name="id_poslodavca" ColumnName="id_poslodavca" />
+                <ScalarProperty Name="naziv_predavanja" ColumnName="naziv_predavanja" />
+                <ScalarProperty Name="slika" ColumnName="slika" />
+                <ScalarProperty Name="id_prostorije" ColumnName="id_prostorije" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="od" ColumnName="od" />
+                <ScalarProperty Name="do" ColumnName="do" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="virtualne_vizitke">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.virtualne_vizitke">
+              <MappingFragment StoreEntitySet="virtualne_vizitke">
+                <ScalarProperty Name="id_vizitke" ColumnName="id_vizitke" />
+                <ScalarProperty Name="id_korisnika" ColumnName="id_korisnika" />
+                <ScalarProperty Name="id_poslodavnca" ColumnName="id_poslodavnca" />
+                <ScalarProperty Name="id_dizajna" ColumnName="id_dizajna" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="korisnici">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.korisnici">
+              <MappingFragment StoreEntitySet="korisnici">
+                <ScalarProperty Name="privilegija" ColumnName="privilegija" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="broj_telefona" ColumnName="broj_telefona" />
+                <ScalarProperty Name="interesi" ColumnName="interesi" />
+                <ScalarProperty Name="godina" ColumnName="godina" />
+                <ScalarProperty Name="smjer" ColumnName="smjer" />
+                <ScalarProperty Name="zaporka" ColumnName="zaporka" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="slika" ColumnName="slika" />
+                <ScalarProperty Name="prezime" ColumnName="prezime" />
+                <ScalarProperty Name="ime" ColumnName="ime" />
+                <ScalarProperty Name="id_korisnika" ColumnName="id_korisnika" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="poslodavci">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.poslodavci">
+              <MappingFragment StoreEntitySet="poslodavci">
+                <ScalarProperty Name="popis" ColumnName="popis" />
+                <ScalarProperty Name="glasanje1" ColumnName="glasanje" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="slika" ColumnName="slika" />
+                <ScalarProperty Name="opis" ColumnName="opis" />
+                <ScalarProperty Name="web" ColumnName="web" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="naziv" ColumnName="naziv" />
+                <ScalarProperty Name="id_poslodavca" ColumnName="id_poslodavca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="radnici">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.radnici">
+              <MappingFragment StoreEntitySet="radnici">
+                <ScalarProperty Name="id_korisnika" ColumnName="id_korisnika" />
+                <ScalarProperty Name="id_poslodavca" ColumnName="id_poslodavca" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="pozicija" ColumnName="pozicija" />
+                <ScalarProperty Name="id_radnika" ColumnName="id_radnika" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="glasanje">
+            <EntityTypeMapping TypeName="DaniKarijeraModel.glasanje">
+              <MappingFragment StoreEntitySet="glasanje">
+                <ScalarProperty Name="ocjena" ColumnName="ocjena" />
+                <ScalarProperty Name="id_poslodavca" ColumnName="id_poslodavca" />
+                <ScalarProperty Name="id_korisnika" ColumnName="id_korisnika" />
+                <ScalarProperty Name="id_glasanje" ColumnName="id_glasanje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

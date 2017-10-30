@@ -1,0 +1,116 @@
+﻿@using DaniKarijera.Models
+@using DaniKarijera.Common
+@{
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";;
+    ViewBag.Title = "FOI Dani karijera [Registracija]";
+}
+
+
+
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+        
+    .ui.menu .item img.logo {
+        margin-right: 1.5em;
+    }
+
+    .main.container {
+        margin-top: 7em;
+    }
+
+    .wireframe {
+        margin-top: 2em;
+    }
+
+    .ui.footer.segment {
+        margin: 5em 0em 0em;
+        padding: 5em 0em;
+    }*
+    .table {
+        margin-top:10%;
+    }
+
+   
+    </style>
+@if (!string.IsNullOrEmpty(ViewBag.Poslano))
+{
+<div class="ui positive message">
+    <i class="close icon"></i>
+    <div class="header">
+       Uspješno
+    </div>
+    <p>@ViewBag.Poslano</p>
+</div>
+}
+
+
+
+    <div class="ui text container">
+        <div class="ui top attached tabular menu">
+            <a class="item active" data-tab="first">Popis poslodavaca</a>
+            <a class="item" data-tab="second">Prizemlje</a>
+            <a class="item" data-tab="third">1. Kat</a>
+            <a class="item" data-tab="fourth">2. Kat</a>            
+        </div>
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            <table class="ui  blue table">
+                <thead>
+                    <tr>
+                        <th>Tvrtka</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        List<poslodavci> poslodavci = ViewData["poslodavci"] as List<poslodavci>;
+                    }
+                    @foreach (poslodavci p in poslodavci)
+                    {
+                        <tr>
+                            <td>
+                                <h4 class="ui image header">
+                                    <img src="@p.logo" class="ui mini rounded image">
+                                    <div class="content">
+                                        @p.naziv
+                                        <div class="sub header">
+                                            @p.opis
+                                        </div>
+                                    </div>
+                                </h4>
+                            </td>
+                            <td>
+                                @if (Korisnici.DohvatiTrenutnogKorisnika() != null)
+                                {
+                                    <a href="~/Poslodavci/Vizitka/@p.id_poslodavca" class="ui primary button">Pošalji vizitku</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+            <img src="~/Content/Images/prizemlje.png" style="width:100%; max-width:1024px;" />
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="third">
+
+            <img src="~/Content/Images/1kat.png" style="width:100%; max-width:1024px;" />
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="fourth">
+
+            <img src="~/Content/Images/2kat.png" style="width:100%; max-width:1024px;" />
+        </div>
+        
+        
+    </div>
+
+@Styles.Render("~/Content/css/leo")
+
+@Styles.Render("~/Content/semantic")
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/tab.js"></script>
+<script>
+    $('.menu .item').tab();
+</script>

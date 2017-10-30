@@ -1,0 +1,96 @@
+﻿<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700&amp;subset=latin-ext" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+@using DaniKarijera.Common
+@using DaniKarijera.Models
+
+@Styles.Render("~/Content/css/leo")
+@Scripts.Render("~/bundles/jquery")
+
+@{ radnici r = Korisnici.DohvatiRadnik(); korisnici k = Korisnici.DohvatiTrenutnogKorisnika(); }
+<body>
+    <div class="header-leo">
+        <div class="container">
+            <div class="image">
+                <img src="~/Content/Images/Header.jpg" />
+            </div>
+            <div class="navigation">
+                <div class="navigation-top">
+
+                    <div class="navigation1"><a href="https://cpsrk.foi.hr/tjedan-karijera">#Raspored</a></div>
+                    <div class="navigation2"><a href="~/Poslodavci">#Poslodavci</a></div>
+                    @if (k != null)
+                    {
+                        <div class="navigation3"><a href="~/Glasanje">#Glasanje</a></div>
+                    }
+                    else
+                    {
+                    <div class="navigation3"><a href="~/Account/Login">#Prijava</a></div>
+                    }
+                    @if (r != null)
+                    {
+                        <div class="navigation4"><a href="~/Poslodavci/Uredi/@Korisnici.DohvatiRadnik().id_poslodavca">#Moj poslodavac</a></div>
+                    }
+                    else
+                    {
+                    <div class="navigation4"><a href="~/Account/Register">#Registacija</a></div>
+                    }
+                    <div class="navigation5"><a href="~/Account/Profil">#Moj profil</a></div>
+                    <div style="margin-top:50px;"><a href="~/nagradna_igra">#Nagradna igra</a></div>
+                    
+                    
+                </div>
+               
+            </div>
+
+            <div class="navigation-small">
+                <div class="nav-button" onclick="tooglenav()">MENU</div>
+                <ul id="smallnav">
+                    <li><a href="https://cpsrk.foi.hr/tjedan-karijera">Raspored</a></li>
+                    <li><a href="~/poslodavci">Poslodavci</a></li>
+                    @if (k != null)
+                    {
+                        <li><a href="~/Glasanje">Glasanje</a></li>
+                    }
+                    else
+                    {
+                    <li><a href="~/Account/Login">Prijava</a></li>
+                    }
+                    @if (r != null)
+                    {
+                        <li><a href="~/Poslodavci/Uredi/@Korisnici.DohvatiRadnik().id_poslodavca">Moj poslodavac</a></li>
+                    }
+                    else
+                    {
+                    <li><a href="~/Account/Register">Registacija</a></li>
+                    }
+                    <li><a href="~/Account/Profil">Moj profil</a></li>
+                    <li><a href="~/nagradna_igra">Nagradna igra</a></li>
+                   
+                  
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+    <br class="clearfix" />
+    <div class="container">
+
+            @RenderBody()
+        
+    </div>
+
+    <script>
+        function tooglenav() {
+            $("#smallnav").slideToggle();
+        }
+    </script>
+
+</body>
+</html>

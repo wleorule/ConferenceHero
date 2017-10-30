@@ -1,0 +1,196 @@
+﻿@using DaniKarijera.Models
+@{
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml"; 
+    ViewBag.Title = "FOI Dani karijera [Glasanje]";
+}
+<style>
+    /*  SECTIONS  */
+.section {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+/*  GRID OF THREE  */
+.span_3_of_3 { width: 100%; }
+.span_2_of_3 { width: 66.13%; }
+.span_1_of_3 { width: 32.26%; }
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+ @@media only screen and (max-width: 480px) {
+	.col {  margin: 1% 0 1% 0%; }
+	.span_3_of_3, .span_2_of_3, .span_1_of_3 { width: 100%; }
+}
+
+    .glasanje {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: #Dadada;
+        height: 200px;
+        font-family: Montserrat;
+        font-size: 20px;
+    }
+
+    .poslodavac {
+        background: url(../../Content/Images/glasanje-bg.jpg) no-repeat center;
+        height: 160px;
+        overflow:hidden;
+        -webkit-border-radius: 10px 10px 0 0;
+        border-radius: 10px 10px 0 0;
+        position:relative;
+        display:block;
+        text-align:center;
+    }
+
+        .poslodavac img {
+            max-height: 130px;
+            margin-top: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+        .poslodavac label {
+            width:100%;
+            height:24px;
+            overflow:hidden;
+            color:#fFF;
+
+        }
+        .glasanje ul {
+            margin:0;
+            padding:0;
+
+        }
+
+    .glasanje li {
+        list-style: none;
+        float: left;
+        width: 19.3%;
+        border-right: 1px solid #aaa;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        color: #888;
+        cursor:pointer;
+    }
+
+        li.noright{
+            border-right:0;
+        }
+
+        li.active {
+            color:#222;
+        }
+</style>
+
+@if(ViewBag.Vodeci != null)
+{
+    <h3 style="width:100%;text-align:center;font-family:Roboto">Trenutno vodeći poslodavac:<br /> @ViewBag.Vodeci</h3>
+}
+
+@{ 
+    List<poslodavci> pos = ViewData["raspored"] as List<poslodavci>;
+    List<glasanje> gla = ViewData["glasanje"] as List<glasanje>;
+    int brojacGrupe = 0;
+}
+@foreach (poslodavci p in pos)
+{
+    if (brojacGrupe == 0)
+    {
+        @:<div class="section group">
+    }
+
+    <div class="col span_1_of_3">
+        <div class="glasanje">
+@if (!string.IsNullOrEmpty(p.slika))
+{
+           @:<div class="poslodavac" style="background-image:url('@p.slika');">
+                }
+else
+{
+    @:<div class="poslodavac">
+                           }
+                <img class="logo" src="@p.logo" /><br />
+                <label>@p.naziv</label>
+            </div>
+            <div class="ocjene">
+                <ul>
+                    <li id="@(p.id_poslodavca)o1" onclick="ocijeni(@p.id_poslodavca, 1)">1</li>
+                    <li id="@(p.id_poslodavca)o2" onclick="ocijeni(@p.id_poslodavca, 2)">2</li>
+                    <li id="@(p.id_poslodavca)o3" onclick="ocijeni(@p.id_poslodavca, 3)">3</li>
+                    <li id="@(p.id_poslodavca)o4" onclick="ocijeni(@p.id_poslodavca, 4)">4</li>
+                    <li id="@(p.id_poslodavca)o5" class="noright" onclick="ocijeni(@p.id_poslodavca, 5)">5</li>
+                </ul>
+            </div>
+        </div>
+   @:</div>
+
+    glasanje g = gla.Where(l => l.id_poslodavca == p.id_poslodavca).FirstOrDefault();
+    
+
+    if(g != null)
+    {
+
+
+        <script>
+            $("#@(p.id_poslodavca)o@(g.ocjena)").addClass("active");
+            </script>
+    }
+
+    brojacGrupe++;
+    if(brojacGrupe == 3)
+    {
+        @:</div>
+        brojacGrupe = 0;
+    }
+}
+
+<script>
+    function ocijeni(id, ocjena) {
+
+        $("#" + id + "o1").removeClass("active");
+        $("#" + id + "o2").removeClass("active");
+        $("#" + id + "o3").removeClass("active");
+        $("#" + id + "o4").removeClass("active");
+        $("#" + id + "o5").removeClass("active");
+
+        $("#" + id + "o" + ocjena).addClass("active");
+        console.log(id + "o" + ocjena);
+
+        $.get("https://tdk.cpsrk.foi.hr/Glasanje/Ocijeni/" + id +"?ocjena="+ocjena, function (data) {
+
+            if (data != ocjena) {
+                alert("Doslo je do pogreske prilikom ocijenjeivanja")
+            }
+
+            console.log(data);
+        });
+    }
+</script>
+
+
+
+            
+          
+
+
+
+
+
+
+
+

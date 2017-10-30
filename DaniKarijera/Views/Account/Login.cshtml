@@ -1,0 +1,148 @@
+﻿@using DaniKarijera.Models
+@model Login
+@{
+    Layout = "~/Views/Shared/_Layout_Semantic.cshtml";;
+    ViewBag.Title = "FOI Dani karijera [Prijava]";
+}
+
+
+
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+
+            body > .grid {
+                height: 100%;
+            }
+
+
+        .column {
+            max-width: 450px;
+        }
+    </style>
+    <script>
+  $(document)
+    .ready(function() {
+      $('.ui.form')
+        .form({
+          fields: {
+            email: {
+              identifier  : 'Login.Email',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Unesi adresu e-pošte'
+                },
+                {
+                  type   : 'email',
+                  prompt : 'Adresa e-pošte nije ispravnog formata'
+                }
+              ]
+            },
+            password: {
+                identifier: 'Login.Password',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Unesi zaporku'
+                },
+                {
+                  type   : 'length[6]',
+                  prompt : 'Zaporka mora biti minimalno 6 znakova'
+                }
+              ]
+            }
+          }
+        })
+      ;
+    })
+  ;
+    </script>
+
+   
+
+    <div class="ui middle aligned center aligned grid">
+        
+        <div class="column">    
+            @if (ViewBag.Error != null)
+            {
+                <div class="ui negative message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Nešto je pošlo po krivu!
+                    </div>
+                    <p>
+                        Vaš pokušaj prijave nije uspio,<br /> molimo pokušajte ponovo.
+                    </p>
+                </div>
+            }
+
+            @if (ViewBag.Aktivacija != null)
+            {
+                <div class="ui warning message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Račun pronađen, aktivacija potrebna.
+                    </div>
+                    <p>
+                        Prvo morate aktivirati račun kako bi se mogli prijaviti.
+                    </p>
+                </div>
+            }
+
+            @if (ViewBag.Registracija != null)
+            {
+                <div class="ui info message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Info
+                    </div>
+                    <p data-text="Vaš račun je uspješno kreiran, molimo Vas provjerite vaš sandučić e-pošte kako bi ga aktivirali!">
+                        Za sudjelovanje u nagradnoj igri potrebno se registrirati sa @@foi.hr mailom. U slučaju osvajanja nagrade, identitet i valjanost maila dobitnika će se provjeriti.                        
+                    </p>
+                </div>
+            }
+
+        
+
+            @if (ViewBag.UspjesnoAktiviran != null)
+            {
+                <div class="ui positive  message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Uspješno!
+                    </div>
+                    <p>
+                        Uspješno ste aktivirali račun, sada se možete prijaviti.
+                    </p>
+                </div>
+            }
+            <form class="ui large form" method="post">
+                <img src="~/Content/Images/Logo.png" class="image" style="width:300px;"/>
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="Login.Email" placeholder="Adresa e-pošte">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="Login.Password" placeholder="Zaporka">
+                        </div>
+                    </div>
+                    <div class="ui fluid large  submit button " style="background:#691C4C; color:#FFF;">Prijava</div>
+                </div>
+
+                <div class="ui error message"></div>
+
+            </form>
+
+            <div class="ui message">
+               Nemaš račun? <a href="~/Account/Register" class="ljubicasta">Registracija</a>
+            </div>
+        </div>
+    </div>
+

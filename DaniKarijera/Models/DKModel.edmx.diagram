@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="14824fc0f1ef4ec6b856c1ee4c00fd22" Name="Diagram1">
+        <EntityTypeShape EntityType="DaniKarijeraModel.dizajn" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DaniKarijeraModel.prostorije" Width="1.5" PointX="3.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DaniKarijeraModel.raspored" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DaniKarijeraModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DaniKarijeraModel.virtualne_vizitke" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__virtualne__id_di__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__raspored__id_pro__2A4B4B5E" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DaniKarijeraModel.korisnici" Width="1.5" PointX="8.375" PointY="1" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__virtualne__id_ko__30F848ED" />
+        <EntityTypeShape EntityType="DaniKarijeraModel.poslodavci" Width="1.5" PointX="0.75" PointY="4.875" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__raspored__id_pos__29572725" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__virtualne__id_po__31EC6D26" />
+        <EntityTypeShape EntityType="DaniKarijeraModel.radnici" Width="1.5" PointX="10.625" PointY="3.25" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__radnici__id_kori__6383C8BA" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__radnici__id_posl__3E52440B" />
+        <EntityTypeShape EntityType="DaniKarijeraModel.glasanje" Width="1.5" PointX="10.625" PointY="6.375" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__glasanje__id_kor__6FE99F9F" />
+        <AssociationConnector Association="DaniKarijeraModel.FK__glasanje__id_pos__70DDC3D8" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
